@@ -1,0 +1,73 @@
+﻿<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{70C7AF4B-00C2-4BE9-9271-08190126C1ED}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>AlphaVantage</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>AlphaVantage</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlphaVantage.cs" />
+    <Compile Include="AlphaVantageHelper.cs" />
+    <Compile Include="AVEnums\AVInterval.cs" />
+    <Compile Include="AVEnums\AVOutputSize.cs" />
+    <Compile Include="AVEnums\AVSeriesType.cs" />
+    <Compile Include="AVEnums\AVTimeSeries.cs" />
+    <Compile Include="EnumExtension.cs" />
+    <Compile Include="EnumValue.cs" />
+    <Compile Include="Indicators\BasicIndicator.cs" />
+    <Compile Include="Indicators\MACD.cs" />
+    <Compile Include="Models\APIParameter.cs" />
+    <Compile Include="Models\Bar.cs" />
+    <Compile Include="Models\IndicatorData.cs" />
+    <Compile Include="Models\IndicatorSingleValue.cs" />
+    <Compile Include="Models\MarketData.cs" />
+    <Compile Include="Models\SectorData.cs" />
+    <Compile Include="Models\SectorPerfomances.cs" />
+    <Compile Include="Models\TechnicalAnalysis.cs" />
+    <Compile Include="Models\TechnicalIndicator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".vs\AlphaVantage\v15\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>
