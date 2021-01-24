@@ -9,6 +9,16 @@ namespace StockStopAlerts
         readonly bool editing = false;
         ViewData data;
         const string winPos = "Edit Window Position";
+        int stopPercentage = 0;
+        decimal fixedStopPrice = 0;
+        bool useTrailingStop = false;
+        bool useDividends = false;
+        bool useOptions = false;
+        double sharesBought = 0;
+        double numShares = 0;
+        decimal buyPrice = 0;
+        decimal dividends = 0;
+        decimal options = 0;
 
         public EditDialog()
         {
@@ -82,16 +92,69 @@ namespace StockStopAlerts
             }
         }
 
+        private void Apply_button_Click(object sender, EventArgs e)
+        {
+            if (!ValidateEntries())
+                return;
+
+            UpdateDatabase();
+            UpdateCurrentStopPrice();
+        }
+
+        private void UpdateCurrentStopPrice()
+        {
+            if (fixedStopPrice != 0)
+            {
+                currentStopPrice_textBox.Text = fixedStopPrice.ToString();
+            }
+            else
+            {
+                if (stopPercentage != 0)
+                {
+                    if (useTrailingStop)
+                    {
+                        decimal referencePrice = editing ? data.highestClose : buyPrice;
+                        if (useDividends && editing)
+                            referencePrice -= data.dividends;
+                        if (useOptions)
+                            referencePrice -= options;
+                        decimal subtractedPercentage = referencePrice * stopPercentage / 100;
+                        decimal stopPrice = referencePrice - subtractedPercentage;
+                        currentStopPrice_textBox.Text = stopPrice.ToString();
+                    }
+                    else
+                    {
+                        decimal referencePrice = buyPrice;
+                        if (useDividends)
+                            referencePrice -= dividends;
+                        if (useOptions)
+                            referencePrice -= options;
+                        decimal subtractedPercentage = referencePrice * stopPercentage / 100;
+                        decimal stopPrice = referencePrice - subtractedPercentage;
+                        currentStopPrice_textBox.Text = stopPrice.ToString();
+                    }
+                }
+            }
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types")]
         private void Ok_button_Click(object sender, EventArgs e)
         {
-            int stopPercentage = 0;
-            decimal fixedStopPrice = 0;
-            bool useTrailingStop = false;
-            bool useDividends = false;
-            bool useOptions = false;
+            if (!ValidateEntries())
+                return;
 
-            double sharesBought;
+            UpdateDatabase();
+            Close();
+        }
+
+        private void Cancel_button_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private bool ValidateEntries()
+        {
+
             try
             {
                 sharesBought = double.Parse(sharesBought_textBox.Text);
@@ -99,10 +162,9 @@ namespace StockStopAlerts
             catch (FormatException)
             {
                 MessageBox.Show("# of shares bought is not a valid number");
-                return;
+                return false;
             }
 
-            double numShares;
             try
             {
                 numShares = double.Parse(currentShares_textBox.Text);
@@ -110,10 +172,9 @@ namespace StockStopAlerts
             catch (FormatException)
             {
                 MessageBox.Show("Current # of shares is not a valid number");
-                return;
+                return false;
             }
 
-            decimal buyPrice;
             try
             {
                 buyPrice = decimal.Parse(buyPrice_textBox.Text);
@@ -121,7 +182,7 @@ namespace StockStopAlerts
             catch (FormatException)
             {
                 MessageBox.Show("Buy price is not a valid number");
-                return;
+                return false;
             }
 
             if (fixedPrice_radioButton.Checked)
@@ -133,7 +194,7 @@ namespace StockStopAlerts
                 catch (FormatException)
                 {
                     MessageBox.Show("Fixed stop price is not a valid number");
-                    return;
+                    return false;
                 }
 
             }
@@ -146,14 +207,13 @@ namespace StockStopAlerts
                 catch (FormatException)
                 {
                     MessageBox.Show("Stop loss percentage is not a valid number");
-                    return;
+                    return false;
                 }
                 useTrailingStop = useTrailingStop_checkBox.Checked;
                 useDividends = useDividends_checkBox.Checked;
                 useOptions = useOptionSales_checkBox.Checked;
             }
 
-            decimal dividends;
             try
             {
                 dividends = decimal.Parse(dividends_textBox.Text);
@@ -161,7 +221,7 @@ namespace StockStopAlerts
             catch (FormatException)
             {
                 MessageBox.Show("Dividends is not a valid number");
-                return;
+                return false;
             }
 
             decimal options;
@@ -172,9 +232,14 @@ namespace StockStopAlerts
             catch (FormatException)
             {
                 MessageBox.Show("Option Sales is not a valid number");
-                return;
+                return false;
             }
 
+            return true;
+        }
+
+        private void UpdateDatabase()
+        {
             if (editing)
             {
                 Program.positionsTable.UpdateRecord(
@@ -211,12 +276,6 @@ namespace StockStopAlerts
                     fixedStopPrice
                     );
             }
-            Close();
-        }
-
-        private void Cancel_button_Click(object sender, EventArgs e)
-        {
-            Close();
         }
 
         private void FixedPrice_radioButton_CheckedChanged(object sender, EventArgs e)
@@ -284,5 +343,6 @@ namespace StockStopAlerts
             dividends += additionalDividend;
             dividends_textBox.Text = dividends.ToString();
         }
+
     }
 }
