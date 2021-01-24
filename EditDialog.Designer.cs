@@ -58,6 +58,8 @@
             this.currentStopPrice_textBox = new System.Windows.Forms.TextBox();
             this.addDiv_button = new System.Windows.Forms.Button();
             this.addDiv_textBox = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.apply_button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -79,7 +81,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 225);
+            this.label2.Location = new System.Drawing.Point(13, 249);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(110, 13);
             this.label2.TabIndex = 2;
@@ -87,7 +89,7 @@
             // 
             // stopLossPercentage_textBox
             // 
-            this.stopLossPercentage_textBox.Location = new System.Drawing.Point(130, 222);
+            this.stopLossPercentage_textBox.Location = new System.Drawing.Point(130, 246);
             this.stopLossPercentage_textBox.Name = "stopLossPercentage_textBox";
             this.stopLossPercentage_textBox.Size = new System.Drawing.Size(49, 20);
             this.stopLossPercentage_textBox.TabIndex = 9;
@@ -95,7 +97,7 @@
             // useTrailingStop_checkBox
             // 
             this.useTrailingStop_checkBox.AutoSize = true;
-            this.useTrailingStop_checkBox.Location = new System.Drawing.Point(201, 225);
+            this.useTrailingStop_checkBox.Location = new System.Drawing.Point(201, 249);
             this.useTrailingStop_checkBox.Name = "useTrailingStop_checkBox";
             this.useTrailingStop_checkBox.Size = new System.Drawing.Size(101, 17);
             this.useTrailingStop_checkBox.TabIndex = 10;
@@ -105,7 +107,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 50);
+            this.label3.Location = new System.Drawing.Point(13, 74);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 13);
             this.label3.TabIndex = 5;
@@ -113,7 +115,7 @@
             // 
             // buy_dateTimePicker
             // 
-            this.buy_dateTimePicker.Location = new System.Drawing.Point(74, 47);
+            this.buy_dateTimePicker.Location = new System.Drawing.Point(74, 71);
             this.buy_dateTimePicker.Name = "buy_dateTimePicker";
             this.buy_dateTimePicker.Size = new System.Drawing.Size(200, 20);
             this.buy_dateTimePicker.TabIndex = 3;
@@ -137,7 +139,7 @@
             // useDividends_checkBox
             // 
             this.useDividends_checkBox.AutoSize = true;
-            this.useDividends_checkBox.Location = new System.Drawing.Point(13, 257);
+            this.useDividends_checkBox.Location = new System.Drawing.Point(13, 281);
             this.useDividends_checkBox.Name = "useDividends_checkBox";
             this.useDividends_checkBox.Size = new System.Drawing.Size(299, 17);
             this.useDividends_checkBox.TabIndex = 11;
@@ -147,7 +149,7 @@
             // useOptionSales_checkBox
             // 
             this.useOptionSales_checkBox.AutoSize = true;
-            this.useOptionSales_checkBox.Location = new System.Drawing.Point(13, 309);
+            this.useOptionSales_checkBox.Location = new System.Drawing.Point(13, 333);
             this.useOptionSales_checkBox.Name = "useOptionSales_checkBox";
             this.useOptionSales_checkBox.Size = new System.Drawing.Size(384, 17);
             this.useOptionSales_checkBox.TabIndex = 12;
@@ -157,7 +159,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 86);
+            this.label5.Location = new System.Drawing.Point(13, 110);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(104, 13);
             this.label5.TabIndex = 11;
@@ -165,7 +167,7 @@
             // 
             // buyPrice_textBox
             // 
-            this.buyPrice_textBox.Location = new System.Drawing.Point(130, 83);
+            this.buyPrice_textBox.Location = new System.Drawing.Point(130, 107);
             this.buyPrice_textBox.Name = "buyPrice_textBox";
             this.buyPrice_textBox.Size = new System.Drawing.Size(66, 20);
             this.buyPrice_textBox.TabIndex = 4;
@@ -173,7 +175,7 @@
             // fixedPrice_radioButton
             // 
             this.fixedPrice_radioButton.AutoSize = true;
-            this.fixedPrice_radioButton.Location = new System.Drawing.Point(76, 156);
+            this.fixedPrice_radioButton.Location = new System.Drawing.Point(76, 180);
             this.fixedPrice_radioButton.Name = "fixedPrice_radioButton";
             this.fixedPrice_radioButton.Size = new System.Drawing.Size(76, 17);
             this.fixedPrice_radioButton.TabIndex = 6;
@@ -185,7 +187,7 @@
             // percentage_radioButton
             // 
             this.percentage_radioButton.AutoSize = true;
-            this.percentage_radioButton.Location = new System.Drawing.Point(166, 156);
+            this.percentage_radioButton.Location = new System.Drawing.Point(166, 180);
             this.percentage_radioButton.Name = "percentage_radioButton";
             this.percentage_radioButton.Size = new System.Drawing.Size(80, 17);
             this.percentage_radioButton.TabIndex = 7;
@@ -197,7 +199,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(13, 157);
+            this.label6.Location = new System.Drawing.Point(13, 181);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(55, 13);
             this.label6.TabIndex = 15;
@@ -206,7 +208,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(13, 192);
+            this.label7.Location = new System.Drawing.Point(13, 216);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(84, 13);
             this.label7.TabIndex = 16;
@@ -214,14 +216,14 @@
             // 
             // fixedStopPrice_textBox
             // 
-            this.fixedStopPrice_textBox.Location = new System.Drawing.Point(102, 189);
+            this.fixedStopPrice_textBox.Location = new System.Drawing.Point(102, 213);
             this.fixedStopPrice_textBox.Name = "fixedStopPrice_textBox";
             this.fixedStopPrice_textBox.Size = new System.Drawing.Size(61, 20);
             this.fixedStopPrice_textBox.TabIndex = 8;
             // 
             // ok_button
             // 
-            this.ok_button.Location = new System.Drawing.Point(114, 406);
+            this.ok_button.Location = new System.Drawing.Point(70, 430);
             this.ok_button.Name = "ok_button";
             this.ok_button.Size = new System.Drawing.Size(75, 23);
             this.ok_button.TabIndex = 14;
@@ -231,7 +233,7 @@
             // 
             // cancel_button
             // 
-            this.cancel_button.Location = new System.Drawing.Point(226, 406);
+            this.cancel_button.Location = new System.Drawing.Point(270, 430);
             this.cancel_button.Name = "cancel_button";
             this.cancel_button.Size = new System.Drawing.Size(75, 23);
             this.cancel_button.TabIndex = 15;
@@ -242,7 +244,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(13, 286);
+            this.label8.Location = new System.Drawing.Point(13, 310);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(57, 13);
             this.label8.TabIndex = 17;
@@ -251,7 +253,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(13, 338);
+            this.label9.Location = new System.Drawing.Point(13, 362);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(70, 13);
             this.label9.TabIndex = 17;
@@ -259,14 +261,14 @@
             // 
             // dividends_textBox
             // 
-            this.dividends_textBox.Location = new System.Drawing.Point(90, 283);
+            this.dividends_textBox.Location = new System.Drawing.Point(90, 307);
             this.dividends_textBox.Name = "dividends_textBox";
             this.dividends_textBox.Size = new System.Drawing.Size(62, 20);
             this.dividends_textBox.TabIndex = 18;
             // 
             // options_textBox
             // 
-            this.options_textBox.Location = new System.Drawing.Point(90, 335);
+            this.options_textBox.Location = new System.Drawing.Point(90, 359);
             this.options_textBox.Name = "options_textBox";
             this.options_textBox.Size = new System.Drawing.Size(62, 20);
             this.options_textBox.TabIndex = 13;
@@ -274,7 +276,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(13, 124);
+            this.label10.Location = new System.Drawing.Point(13, 148);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(100, 13);
             this.label10.TabIndex = 7;
@@ -282,7 +284,7 @@
             // 
             // currentShares_textBox
             // 
-            this.currentShares_textBox.Location = new System.Drawing.Point(120, 121);
+            this.currentShares_textBox.Location = new System.Drawing.Point(120, 145);
             this.currentShares_textBox.Name = "currentShares_textBox";
             this.currentShares_textBox.Size = new System.Drawing.Size(57, 20);
             this.currentShares_textBox.TabIndex = 5;
@@ -291,7 +293,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Enabled = false;
-            this.label11.Location = new System.Drawing.Point(16, 372);
+            this.label11.Location = new System.Drawing.Point(16, 396);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(93, 13);
             this.label11.TabIndex = 20;
@@ -299,7 +301,7 @@
             // 
             // currentStopPrice_textBox
             // 
-            this.currentStopPrice_textBox.Location = new System.Drawing.Point(114, 369);
+            this.currentStopPrice_textBox.Location = new System.Drawing.Point(114, 393);
             this.currentStopPrice_textBox.Name = "currentStopPrice_textBox";
             this.currentStopPrice_textBox.ReadOnly = true;
             this.currentStopPrice_textBox.Size = new System.Drawing.Size(61, 20);
@@ -307,7 +309,7 @@
             // 
             // addDiv_button
             // 
-            this.addDiv_button.Location = new System.Drawing.Point(201, 282);
+            this.addDiv_button.Location = new System.Drawing.Point(201, 306);
             this.addDiv_button.Name = "addDiv_button";
             this.addDiv_button.Size = new System.Drawing.Size(63, 23);
             this.addDiv_button.TabIndex = 21;
@@ -317,17 +319,38 @@
             // 
             // addDiv_textBox
             // 
-            this.addDiv_textBox.Location = new System.Drawing.Point(270, 283);
+            this.addDiv_textBox.Location = new System.Drawing.Point(270, 307);
             this.addDiv_textBox.Name = "addDiv_textBox";
             this.addDiv_textBox.Size = new System.Drawing.Size(46, 20);
             this.addDiv_textBox.TabIndex = 22;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(13, 42);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(380, 13);
+            this.label12.TabIndex = 23;
+            this.label12.Text = "Prefix symbol with _ for cash equivalent (_401K) or ^ for crypto-currency (^BTC)";
+            // 
+            // apply_button
+            // 
+            this.apply_button.Location = new System.Drawing.Point(170, 430);
+            this.apply_button.Name = "apply_button";
+            this.apply_button.Size = new System.Drawing.Size(75, 23);
+            this.apply_button.TabIndex = 24;
+            this.apply_button.Text = "Apply";
+            this.apply_button.UseVisualStyleBackColor = true;
+            this.apply_button.Click += new System.EventHandler(this.Apply_button_Click);
             // 
             // EditDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(415, 441);
+            this.ClientSize = new System.Drawing.Size(415, 462);
             this.ControlBox = false;
+            this.Controls.Add(this.apply_button);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.addDiv_textBox);
             this.Controls.Add(this.addDiv_button);
             this.Controls.Add(this.label11);
@@ -403,5 +426,7 @@
         private System.Windows.Forms.TextBox currentStopPrice_textBox;
         private System.Windows.Forms.Button addDiv_button;
         private System.Windows.Forms.TextBox addDiv_textBox;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button apply_button;
     }
 }
