@@ -27,7 +27,7 @@ namespace StockStopAlerts
         /// <param name="stock"> Stock symbol </param>
         /// <param name="start"> Start date </param>
         /// <returns> true if data received successfully, false if not </returns>
-        public abstract Task<bool> GetDividends(string stock, DateTime start, out decimal dividends);
+        //public abstract Task<bool> GetDividends(string stock, DateTime start, out decimal dividends);
 
         public abstract Task<bool> GetCryptoQuote(string currency, DateTime start, out StockQuote quote);
 

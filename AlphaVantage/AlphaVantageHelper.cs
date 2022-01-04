@@ -57,10 +57,7 @@ namespace Kermor.AlphaVantage
 											Math.Round(Convert.ToDouble(barData[dataMap[2]]), 2),
                                             Math.Round(Convert.ToDouble(barData[dataMap[3]]), 2),
 											Math.Round(Convert.ToDouble(barData[dataMap[4]]), 2),
-                                            Math.Round(Convert.ToDouble(barData[dataMap[5]]), 2),
-                                            Math.Round(Convert.ToDouble(barData[dataMap[6]]), 0),
-                                            Math.Round(Convert.ToDouble(barData[dataMap[7]]), 3),
-                                            Math.Round(Convert.ToDouble(barData[dataMap[8]]), 3),
+                                            Math.Round(Convert.ToDouble(barData[dataMap[5]]), 0),
                                             barDateTmp));
 				}
 				catch (FormatException)

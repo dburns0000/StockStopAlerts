@@ -111,7 +111,6 @@ namespace StockStopAlerts
                 Logger.Log("TimerEventProcessor(): calling CheckClosingPrices()");
                 pi.CheckClosingPrices();
                 Logger.Log("TimerEventProcessor(): returned from CheckClosingPrices()");
-                updateNow = false;
                 timer.Start();
             }
             else
@@ -183,6 +182,7 @@ namespace StockStopAlerts
                     }
                     this.lastUpdate = quote.date;
 
+#if false
                     // Use updated dividends (if available) for the stop calculations below
                     success = await avQuote.GetDividends(data.symbol, data.buyDate, out decimal dividends);
                     if (success)
@@ -192,10 +192,11 @@ namespace StockStopAlerts
                     }
                     else
                         dividends = data.dividends;
+#endif
 
                     Logger.Log(String.Format($"CheckClosingPricesAlphaVantage(): calling PositionsTable.UpdateRecord({data.symbol}, .., {quote.close.ToString()})"));
-                    Program.positionsTable.UpdateRecord(data.id, quote.date, quote.highest, dividends, quote.close);
-                    CheckStop(data, quote, dividends);
+                    Program.positionsTable.UpdateRecord(data.id, quote.date, quote.highest, 0, quote.close);
+                    CheckStop(data, quote/*,dividends*/);
                 }
                 else
                 {
@@ -226,7 +227,7 @@ namespace StockStopAlerts
                     this.lastUpdate = quote.date;
                     Logger.Log(String.Format($"CheckClosingPricesAlphaVantage(): calling PositionsTable.UpdateRecord({data.symbol}, .., {quote.close.ToString()})"));
                     Program.positionsTable.UpdateRecord(data.id, quote.date, quote.highest, 0, quote.close);
-                    CheckStop(data, quote, 0);
+                    CheckStop(data, quote/*, 0*/);
                 }
                 else
                 {
@@ -235,7 +236,7 @@ namespace StockStopAlerts
             }
         }
 
-        private void CheckStop(ViewData data, StockQuote quote, decimal dividends)
+        private void CheckStop(ViewData data, StockQuote quote/*, decimal dividends*/)
         {
             bool showAlert = false;
             Decimal stopPrice = data.fixedStop;
@@ -251,8 +252,8 @@ namespace StockStopAlerts
                         highestClose = quote.highest;
 
                     Decimal referencePrice = highestClose;
-                    if (data.useDividends)
-                        referencePrice -= dividends;
+                    //if (data.useDividends)
+                    //    referencePrice -= dividends;
                     if (data.useOptions)
                         referencePrice -= data.options;
                     Decimal subtractedPercentage = referencePrice * data.stopPercent / 100;
@@ -263,8 +264,8 @@ namespace StockStopAlerts
                 else
                 {
                     Decimal referencePrice = data.buyPrice;
-                    if (data.useDividends)
-                        referencePrice -= data.dividends;
+                    //if (data.useDividends)
+                    //    referencePrice -= data.dividends;
                     if (data.useOptions)
                         referencePrice -= data.options;
                     Decimal subtractedPercentage = referencePrice * data.stopPercent / 100;

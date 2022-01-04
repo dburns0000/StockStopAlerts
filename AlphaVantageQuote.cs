@@ -8,7 +8,7 @@ namespace StockStopAlerts
     public class AlphaVantageQuote : IStockQuote
     {
         private string AlphaVantageAPIKey = Program.ApiKey;
-        private double sumOfDividends = 0;
+        //private double sumOfDividends = 0;
 
         /// <summary>
         /// Retrieves prices for a given stock/fund from the starting date to the present
@@ -18,7 +18,7 @@ namespace StockStopAlerts
         /// <returns> true if data received successfully, false if not </returns>
         public override Task<bool> GetQuote(string stock, DateTime start, out StockQuote quote)
         {
-            MarketData stockData = AlphaVantage.Stock(stock, AVTimeSeries.Stock_Daily_Adjusted, AVOutputSize.full, AlphaVantageAPIKey);
+            MarketData stockData = AlphaVantage.Stock(stock, AVTimeSeries.Stock_Daily, AVOutputSize.full, AlphaVantageAPIKey);
             if (stockData == null)
             {
                 quote.date = DateTime.Today;
@@ -30,7 +30,7 @@ namespace StockStopAlerts
             while (stockData.Bars.Count == 0 && tries++ <= 5)
             {
                 Thread.Sleep(10000);
-                stockData = AlphaVantage.Stock(stock, AVTimeSeries.Stock_Daily_Adjusted, AVOutputSize.full, AlphaVantageAPIKey);
+                stockData = AlphaVantage.Stock(stock, AVTimeSeries.Stock_Daily, AVOutputSize.full, AlphaVantageAPIKey);
                 if (stockData == null)
                 {
                     quote.date = DateTime.Today;
@@ -61,8 +61,8 @@ namespace StockStopAlerts
                 }
                 if (item.Value.close > highest)
                     highest = item.Value.close;
-                if (item.Value.dividend_amount != 0)
-                    sumOfDividends += item.Value.dividend_amount;
+                //if (item.Value.dividend_amount != 0)
+                //   sumOfDividends += item.Value.dividend_amount;
 
                 if (item.Key < start)
                     break;
@@ -73,6 +73,7 @@ namespace StockStopAlerts
             return Task.FromResult(true);
         }
 
+#if false
         /// <summary>
         /// Retrieves prices for a given stock/fund from the starting date to the present
         /// </summary>
@@ -84,6 +85,7 @@ namespace StockStopAlerts
             dividends = (decimal)sumOfDividends;
             return Task.FromResult(true);
         }
+#endif
 
         /// <summary>
         /// Retrieves prices for a given stock/fund from the starting date to the present
@@ -136,8 +138,8 @@ namespace StockStopAlerts
                 }
                 if (item.Value.close > highest)
                     highest = item.Value.close;
-                if (item.Value.dividend_amount != 0)
-                    sumOfDividends += item.Value.dividend_amount;
+                //if (item.Value.dividend_amount != 0)
+                //    sumOfDividends += item.Value.dividend_amount;
 
                 if (item.Key < start)
                     break;

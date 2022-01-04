@@ -224,7 +224,6 @@ namespace StockStopAlerts
                 return false;
             }
 
-            decimal options;
             try
             {
                 options = decimal.Parse(options_textBox.Text);
