@@ -38,7 +38,7 @@ namespace StockStopAlerts
         }
 
         /// <summary>
-        /// Fills in the dialog controls from the data member
+        /// Fills in the dialog controls from the data members
         /// </summary>
         private void UpdateFields()
         {
@@ -137,7 +137,6 @@ namespace StockStopAlerts
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types")]
         private void Ok_button_Click(object sender, EventArgs e)
         {
             if (!ValidateEntries())
@@ -313,7 +312,6 @@ namespace StockStopAlerts
             Program.settings.SetPointValue(winPos, this.Location);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types")]
         private void AddDiv_button_Click(object sender, EventArgs e)
         {
             decimal additionalDividend;
