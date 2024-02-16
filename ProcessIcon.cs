@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using StockStopAlerts.Properties;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace StockStopAlerts
 {
@@ -117,12 +118,12 @@ namespace StockStopAlerts
                 Logger.Log("TimerEventProcessor(): waiting for 10 PM GMT");
         }
 
-        private void CheckClosingPrices()
+        private async void CheckClosingPrices()
         {
             lastUpdate = DateTime.Now;
             stopAlerts.Clear();
-            CheckClosingPricesAlphaVantage();
-            CheckCryptoCurrencies();
+            await CheckClosingPricesAlphaVantage();
+            await CheckCryptoCurrencies();
             if (stopAlerts.Count != 0)
             {
                 Logger.Log(string.Format($"CheckClosingPrices() showing {stopAlerts.Count} alerts"));
@@ -155,7 +156,7 @@ namespace StockStopAlerts
             }
         }
 
-        private async void CheckClosingPricesAlphaVantage()
+        private async Task CheckClosingPricesAlphaVantage()
         {
             //lastUpdate = DateTime.Now;
             if (!Program.positionsTable.GetAllRecords(out List<ViewData> list))
@@ -205,7 +206,7 @@ namespace StockStopAlerts
             }
         }
 
-        private async void CheckCryptoCurrencies()
+        private async Task CheckCryptoCurrencies()
         {
             lastUpdate = DateTime.Now;
             if (!Program.positionsTable.GetAllRecords(out List<ViewData> list))
