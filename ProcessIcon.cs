@@ -4,6 +4,7 @@ using StockStopAlerts.Properties;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 
 namespace StockStopAlerts
 {
@@ -96,6 +97,11 @@ namespace StockStopAlerts
             }
             DateTime now = DateTime.UtcNow;
             DateTime previousUpdate = Program.settings.GetDateTimeValue("Last Update");
+
+            // Update if the last update was more than 6 hours ago
+            if (now.Subtract(previousUpdate).TotalHours > 6)
+                updateNow = true;
+
             if (!updateNow && now.Date == previousUpdate.Date)
             {
                 Logger.Log("TimerEventProcessor(): already updated for today");
