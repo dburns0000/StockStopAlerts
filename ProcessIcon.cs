@@ -100,18 +100,23 @@ namespace StockStopAlerts
 
             // Update if the last update was more than 6 hours ago
             if (now.Subtract(previousUpdate).TotalHours > 6)
+            {
+            	Logger.Log("TimerEventProcessor(): setting updateNow flag because it has been at least 6 hours since the last update");
                 updateNow = true;
-
+			}
+			
             if (!updateNow && now.Date == previousUpdate.Date)
             {
                 Logger.Log("TimerEventProcessor(): already updated for today");
                 return;
             }
+            
             DayOfWeek dow = now.DayOfWeek;
             if (!updateNow && (dow == DayOfWeek.Sunday || dow == DayOfWeek.Saturday))
             {
                 return;
             }
+            
             if (updateNow || now.Hour == 22)
             {
                 timer.Stop();
