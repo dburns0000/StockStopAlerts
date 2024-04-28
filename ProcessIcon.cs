@@ -13,6 +13,7 @@ namespace StockStopAlerts
         private readonly NotifyIcon notifyIcon;
         private static Timer timer;
         private bool initialUpdate = true;
+        private bool updating = true;
         private bool newDatabase = false;
         private DateTime lastUpdate;
         private struct StopAlert
@@ -98,8 +99,9 @@ namespace StockStopAlerts
             DateTime now = DateTime.UtcNow;
             DateTime previousUpdate = Program.settings.GetDateTimeValue("Last Update");
 
-            // Update if the last update was more than 6 hours ago
-            if (now.Subtract(previousUpdate).TotalHours > 6)
+            // Update if the last update was more than 6 hours ago (in case the computer was asleep)
+            TimeSpan ts = now.Subtract(previousUpdate);
+            if (ts.Hours >= 6)
             {
             	Logger.Log("TimerEventProcessor(): setting updateNow flag because it has been at least 6 hours since the last update");
                 updateNow = true;
@@ -129,19 +131,21 @@ namespace StockStopAlerts
                 Logger.Log("TimerEventProcessor(): waiting for 10 PM GMT");
         }
 
-        private async void CheckClosingPrices()
+        private void CheckClosingPrices()
         {
-            lastUpdate = DateTime.Now;
+            updating = true;
             stopAlerts.Clear();
-            await CheckClosingPricesAlphaVantage();
-            await CheckCryptoCurrencies();
+            CheckClosingPricesAlphaVantage();
+            CheckCryptoCurrencies();
+            lastUpdate = DateTime.Now;
+            Logger.Log(string.Format($"CheckClosingPrices() updating settings.LastUpdate to {lastUpdate}"));
+            Program.settings.SetDateTimeValue("Last Update", lastUpdate);
             if (stopAlerts.Count != 0)
             {
                 Logger.Log(string.Format($"CheckClosingPrices() showing {stopAlerts.Count} alerts"));
                 ShowAlerts();
             }
-            Logger.Log(string.Format($"CheckClosingPrices() updating settings.LastUpdate to {lastUpdate}"));
-            Program.settings.SetDateTimeValue("Last Update", lastUpdate);
+            updating = false;
         }
 
         /// <summary>
@@ -158,6 +162,12 @@ namespace StockStopAlerts
         /// </summary>
         private void Icon_MouseClick(object sender, MouseEventArgs e)
         {
+            if (updating)
+            {  // Don't allow the user to view the database while it's being updated.
+                MessageBox.Show("The positions are being updated. Please try again later.", "Stock Stop Alerts");
+                return;
+            }
+
             // Handle mouse button clicks.
             if (e.Button == MouseButtons.Left)
             {
