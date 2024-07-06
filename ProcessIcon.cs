@@ -171,20 +171,21 @@ namespace StockStopAlerts
 
         private async Task CheckClosingPricesAlphaVantage()
         {
-            //lastUpdate = DateTime.Now;
             if (!Program.positionsTable.GetAllRecords(out List<ViewData> list))
             {
                 Logger.Log("CheckClosingPricesAlphaVantage(): PositionsTable.GetAllRecords returned false");
                 return;
             }
+
+            IStockQuote avQuote = new AlphaVantageQuote();
+
             foreach (ViewData data in list)
             {
-                if (data.symbol[0] == '_')  // non-stock position (cash, 401K, etc)
+                if (data.symbol[0] == '_')  // non-stock position (cash, etc)
                     continue;
                 if (data.symbol[0] == '^')  // Crypto-currency
                     continue;
 
-                IStockQuote avQuote = new AlphaVantageQuote();
                 DateTime start = data.buyDate;  // recalculate all dividends since stock was bought
                 Logger.Log(String.Format($"CheckClosingPricesAlphaVantage(): calling avQuote.GetQuote({data.symbol}, {start.ToShortDateString()}, ..)"));
                 bool success = await avQuote.GetQuote(data.symbol, start, out StockQuote quote);
