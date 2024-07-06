@@ -99,14 +99,6 @@ namespace StockStopAlerts
             DateTime now = DateTime.UtcNow;
             DateTime previousUpdate = Program.settings.GetDateTimeValue("Last Update");
 
-            // Update if the last update was more than 6 hours ago (in case the computer was asleep)
-            TimeSpan ts = now.Subtract(previousUpdate);
-            if (ts.Hours >= 6)
-            {
-            	Logger.Log("TimerEventProcessor(): setting updateNow flag because it has been at least 6 hours since the last update");
-                updateNow = true;
-			}
-			
             if (!updateNow && now.Date == previousUpdate.Date)
             {
                 Logger.Log("TimerEventProcessor(): already updated for today");
