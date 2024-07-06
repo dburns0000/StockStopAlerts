@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Kermor.AlphaVantage;
@@ -7,17 +8,43 @@ namespace StockStopAlerts
 {
     public class AlphaVantageQuote : IStockQuote
     {
-        private string AlphaVantageAPIKey = Program.ApiKey;
-        //private double sumOfDividends = 0;
+        private readonly string AlphaVantageAPIKey = Program.ApiKey;
+        private readonly Dictionary<string, MarketData> retrievedValues = new Dictionary<string, MarketData>();
 
         /// <summary>
         /// Retrieves prices for a given stock/fund from the starting date to the present
         /// </summary>
         /// <param name="stock"> Stock symbol </param>
-        /// <param name="start"> Start date </param>
+        /// <param name="start"> Start date - used for highest price since bought </param>
         /// <returns> true if data received successfully, false if not </returns>
         public override Task<bool> GetQuote(string stock, DateTime start, out StockQuote quote)
         {
+            if (retrievedValues.ContainsKey(stock))
+            {
+                MarketData cachedStockData = retrievedValues[stock];
+                DateTime cachedDate = DateTime.Today;
+                double cachedClose = 0;
+                double cachedHighest = 0;
+                bool firstItem = true;
+                foreach (var item in cachedStockData.Bars)
+                {
+                    if (firstItem)
+                    {
+                        cachedDate = item.Key;
+                        cachedClose = item.Value.close;
+                        firstItem = false;
+                    }
+                    if (start >= item.Value.timestamp && item.Value.close > cachedHighest)
+                        cachedHighest = item.Value.close;
+                    if (item.Key < start)
+                        break;
+                }
+                quote.date = cachedDate;
+                quote.close = (decimal)cachedClose;
+                quote.highest = (decimal)cachedHighest;
+                return Task.FromResult(true);
+            }
+
             MarketData stockData = AlphaVantage.Stock(stock, AVTimeSeries.Stock_Daily, AVOutputSize.full, AlphaVantageAPIKey);
             if (stockData == null)
             {
@@ -61,19 +88,17 @@ namespace StockStopAlerts
                 }
                 if (item.Value.close > highest)
                     highest = item.Value.close;
-                //if (item.Value.dividend_amount != 0)
-                //   sumOfDividends += item.Value.dividend_amount;
-
                 if (item.Key < start)
                     break;
             }
             quote.date = date;
             quote.close = (decimal)close;
             quote.highest = (decimal)highest;
+            retrievedValues.Add(stock, stockData);
             return Task.FromResult(true);
         }
 
-#if false
+#if false   // requires paid subscription to AlphaVantage
         /// <summary>
         /// Retrieves prices for a given stock/fund from the starting date to the present
         /// </summary>
@@ -91,7 +116,7 @@ namespace StockStopAlerts
         /// Retrieves prices for a given stock/fund from the starting date to the present
         /// </summary>
         /// <param name="stock"> Stock symbol </param>
-        /// <param name="start"> Start date </param>
+        /// <param name="start"> Start date - used for highest price since bought </param>
         /// <returns> true if data received successfully, false if not </returns>
         public override Task<bool> GetCryptoQuote(string currency, DateTime start, out StockQuote quote)
         {
@@ -138,9 +163,6 @@ namespace StockStopAlerts
                 }
                 if (item.Value.close > highest)
                     highest = item.Value.close;
-                //if (item.Value.dividend_amount != 0)
-                //    sumOfDividends += item.Value.dividend_amount;
-
                 if (item.Key < start)
                     break;
             }
